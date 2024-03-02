@@ -24,7 +24,6 @@ public class HelpMethods {
         float yIndex = y / Game.TILES_SIZE;
 
         int value = lvlData[(int) yIndex][(int) xIndex];
-        System.out.println("maxWidth: " + maxWidth);
         if(value >= 45 ||value == 0 || value == 5 || value == 6 || value == 7 || value == 8 || value == 35){
             return  false;
         }

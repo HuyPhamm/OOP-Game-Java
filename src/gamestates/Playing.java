@@ -52,7 +52,7 @@ public class Playing extends State implements Statemethods{
         int bgImageWidth = Game.GAME_WIDTH;
         int bgOffset = xLvlOffset % bgImageWidth;
         int amountBgToFillScreen = (int) Math.ceil(1.0 * Game.GAME_WIDTH / bgImageWidth) + 1;
-
+        System.out.println(amountBgToFillScreen);
         // VẼ
         for (int i = 0; i < amountBgToFillScreen; i++) {
             // LAYER 0
