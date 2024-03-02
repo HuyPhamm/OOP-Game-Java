@@ -6,8 +6,8 @@ public class Constants {
 
     public static class EnemyConstants{
         public static final int FIRE_DEMON = 29;
-        public static final int IDLE = 2;
-        public static final int WALK = 3;
+        public static final int IDLE = 0;
+        public static final int WALK = 1;
         public static final int CLEAVE = 4;
         public static final int TAKE_HIT = 5;
         public static final int DEAD = 6;
@@ -17,7 +17,7 @@ public class Constants {
         public static final int DEMON_WIDTH = (int) (DEMON_WIDTH_DEFAULT * Game.SCALE);
         public static final int DEMON_HEIGHT = (int) (DEMON_HEIGHT_DEFAULT * Game.SCALE);
         public static final int FIRE_DEMON_DRAWOFFSET_X = (int) (50 * Game.SCALE);
-        public static final int FIRE_DEMON_DRAWOFFSET_Y = (int) (38 * Game.SCALE);
+        public static final int FIRE_DEMON_DRAWOFFSET_Y = (int) (48 * Game.SCALE);
 
         public static int GetSpirteAmount(int enemy_type, int enemy_state){
             switch (enemy_type) {

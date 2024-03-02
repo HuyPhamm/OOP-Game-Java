@@ -21,12 +21,11 @@ public class EnemyManager {
 
     private void addEnemies() {
         fireDemons = LoadSave.GetFireDemon();
-        System.out.println("Size of FireDemon: " + fireDemons.size());
     }
 
-    public void update(){
+    public void update(int[][] lvlData){
         for(FireDemon d : fireDemons){
-            d.update();
+            d.update(lvlData);
         }
     }
 
@@ -36,7 +35,7 @@ public class EnemyManager {
 
     private void drawDemons(Graphics g, int xLvlOffset) {
         for(FireDemon d : fireDemons){
-            g.drawImage(fireAnimations[2][d.getAniIndex()],(int) d.getHitBox().x- xLvlOffset, (int) d.getHitBox().y - 70, DEMON_WIDTH,DEMON_HEIGHT,null);
+            g.drawImage(fireAnimations[d.getEnemyState()][d.getAniIndex()],(int) d.getHitBox().x- xLvlOffset - FIRE_DEMON_DRAWOFFSET_X, (int) d.getHitBox().y - FIRE_DEMON_DRAWOFFSET_Y, DEMON_WIDTH,DEMON_HEIGHT,null);
         }
     }
 
@@ -49,6 +48,38 @@ public class EnemyManager {
                 e.printStackTrace();
             }
         }
+        for (int i = 0; i < GetSpirteAmount(FIRE_DEMON, WALK); i++) {
+            try {
+                fireAnimations[WALK][i] = ImageIO.read(getClass().getResourceAsStream("/demon/Fire Demon/02_demon_walk/demon_walk_" + (i + 1) + ".png"));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        for (int i = 0; i < GetSpirteAmount(FIRE_DEMON, CLEAVE); i++) {
+            try {
+                fireAnimations[CLEAVE][i] = ImageIO.read(getClass().getResourceAsStream("/demon/Fire Demon/03_demon_cleave/demon_cleave_" + (i + 1) + ".png"));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        for (int i = 0; i < GetSpirteAmount(FIRE_DEMON, TAKE_HIT); i++) {
+            try {
+                fireAnimations[TAKE_HIT][i] = ImageIO.read(getClass().getResourceAsStream("/demon/Fire Demon/04_demon_take_hit/demon_take_hit_" + (i + 1) + ".png"));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        for (int i = 0; i < GetSpirteAmount(FIRE_DEMON, DEAD); i++) {
+            try {
+                fireAnimations[DEAD][i] = ImageIO.read(getClass().getResourceAsStream("/demon/Fire Demon/05_demon_death/demon_death_" + (i + 1) + ".png"));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
 }

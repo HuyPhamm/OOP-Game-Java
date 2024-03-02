@@ -14,10 +14,10 @@ public abstract class Entity {
         this.height = height;
     }
 
-    protected void drawHitbox(Graphics g){
+    protected void drawHitbox(Graphics g, int xlvlOffset){
         //Check va chạm
         g.setColor(Color.PINK);
-        g.drawRect( (int) hitBox.x,(int) hitBox.y, (int) hitBox.width, (int) hitBox.height);
+        g.drawRect((int) hitBox.x - xlvlOffset,(int) hitBox.y, (int) hitBox.width, (int) hitBox.height);
     }
     protected void initHitbox(float x,float y, float width ,float height){
         hitBox = new Rectangle2D.Float(x,y,width,height);

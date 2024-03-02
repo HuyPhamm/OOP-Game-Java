@@ -46,7 +46,7 @@ public class HelpMethods {
         if(airSpeed > 0){
             //Falling : Rơi chạm đất
             int tileYPos = currentTile * (Game.TILES_SIZE) ;
-            int yOffset = (int)(Game.TILES_SIZE - hitBox.height + 1);
+            int yOffset = (int)(Game.TILES_SIZE - hitBox.height );
             return tileYPos + yOffset - 1;
         }else{
             //Jumping : Nhảy
@@ -55,10 +55,14 @@ public class HelpMethods {
     }
 
     public static boolean IsEntityOnFloor(Rectangle2D.Float hitBox, int[][] lvlData){
-        if(!IsSolid(hitBox.x,hitBox.y + hitBox.height,lvlData)){
-            if(!IsSolid(hitBox.x + hitBox.width,hitBox.y + hitBox.height,lvlData))
+        if(!IsSolid(hitBox.x,hitBox.y + hitBox.height + 1,lvlData)){
+            if(!IsSolid(hitBox.x + hitBox.width,hitBox.y + hitBox.height + 1,lvlData))
                 return false;
         }
         return true;
+    }
+
+    public static boolean IsFloor(Rectangle2D.Float hitbox, float xSpeed,int[][] lvlData){
+        return IsSolid(hitbox.x + xSpeed, hitbox.y + hitbox.height + 1, lvlData);
     }
 }
