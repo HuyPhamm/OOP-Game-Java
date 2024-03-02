@@ -3,6 +3,42 @@ package utilz;
 import main.Game;
 
 public class Constants {
+
+    public static class EnemyConstants{
+        public static final int FIRE_DEMON = 29;
+        public static final int IDLE = 2;
+        public static final int WALK = 3;
+        public static final int CLEAVE = 4;
+        public static final int TAKE_HIT = 5;
+        public static final int DEAD = 6;
+
+        public static final int DEMON_WIDTH_DEFAULT  = 120;
+        public static final int DEMON_HEIGHT_DEFAULT = 80;
+        public static final int DEMON_WIDTH = (int) (DEMON_WIDTH_DEFAULT * Game.SCALE);
+        public static final int DEMON_HEIGHT = (int) (DEMON_HEIGHT_DEFAULT * Game.SCALE);
+        public static final int FIRE_DEMON_DRAWOFFSET_X = (int) (50 * Game.SCALE);
+        public static final int FIRE_DEMON_DRAWOFFSET_Y = (int) (38 * Game.SCALE);
+
+        public static int GetSpirteAmount(int enemy_type, int enemy_state){
+            switch (enemy_type) {
+                case FIRE_DEMON:
+                    switch (enemy_state) {
+                        case IDLE:
+                            return 6;
+                        case WALK:
+                            return 12;
+                        case CLEAVE:
+                            return 15;
+                        case TAKE_HIT:
+                            return 5;
+                        case DEAD:
+                            return 22;
+                    }
+            }
+            return 0;
+        }
+
+    }
     public static class UI{
         public static class Buttons{
             public static final int B_WIDTH_DEFAULT = 180;

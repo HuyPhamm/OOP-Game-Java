@@ -1,10 +1,15 @@
 package utilz;
 
+import entities.FireDemon;
+import main.Game;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 
+import static utilz.Constants.EnemyConstants.*;
 public class LoadSave {
     //public static final String PLAYER_ATLAS = "player/idle/idle-1.png";
     public static final String LEVEL_ONE_DATA = "level/level_1.png";
@@ -32,6 +37,19 @@ public class LoadSave {
         return image;
     }
 
+    public static ArrayList<FireDemon> GetFireDemon(){
+        BufferedImage img = GetSpriteAtlas(LEVEL_ONE_DATA);
+        ArrayList<FireDemon> list = new ArrayList<>();
+        for (int i = 0; i < img.getHeight(); i++) {
+            for (int j = 0; j < img.getWidth(); j++) {
+                Color color = new Color(img.getRGB(j, i));
+                int value = color.getGreen();
+                if (value == FIRE_DEMON)
+                    list.add(new FireDemon(j * Game.TILES_SIZE, i * Game.TILES_SIZE));
+            }
+        }
+        return list;
+    }
     public static int[][] GetLevelData() {
         // Kích cỡ ảnh Level cỡ 15x165
         BufferedImage img = GetSpriteAtlas(LEVEL_ONE_DATA);

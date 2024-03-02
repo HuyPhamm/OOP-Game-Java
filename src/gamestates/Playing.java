@@ -1,6 +1,7 @@
 package gamestates;
 
 import UI.PauseOverlay;
+import entities.EnemyManager;
 import entities.Player;
 import levels.LevelManager;
 import main.Game;
@@ -14,6 +15,7 @@ import java.awt.image.BufferedImage;
 public class Playing extends State implements Statemethods{
     private Player player;
     private LevelManager levelManager;
+    private EnemyManager enemyManager;
     private PauseOverlay pauseOverlay;
     private boolean paused = false;
     private int xLvlOffset;
@@ -34,6 +36,7 @@ public class Playing extends State implements Statemethods{
     private void initClasses(){
         loadBackground();
         levelManager = new LevelManager(game);
+        enemyManager = new EnemyManager(this);
         player = new Player(100,200,(int) (20 * Game.SCALE), (int) (24 * Game.SCALE));
         player.loadLvlData(levelManager.getCurrentLevel().getLevelData());
         pauseOverlay = new PauseOverlay(this);
@@ -102,6 +105,7 @@ public class Playing extends State implements Statemethods{
         if(!paused){
             levelManager.update();
             player.update();
+            enemyManager.update();
             checkCloseToBorder();
         }
         else{
@@ -130,6 +134,7 @@ public class Playing extends State implements Statemethods{
         drawCloud(g,xLvlOffset);
         levelManager.draw(g,xLvlOffset);
         player.render(g,xLvlOffset);
+        enemyManager.draw(g, xLvlOffset);
 
         if(paused){
             g.setColor(new Color(0,0,0,100));
