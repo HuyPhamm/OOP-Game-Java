@@ -23,9 +23,9 @@ public class EnemyManager {
         fireDemons = LoadSave.GetFireDemon();
     }
 
-    public void update(int[][] lvlData){
+    public void update(int[][] lvlData, Player player){
         for(FireDemon d : fireDemons){
-            d.update(lvlData);
+            d.update(lvlData,player);
         }
     }
 

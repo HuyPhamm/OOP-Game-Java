@@ -7,7 +7,7 @@ public class Constants {
     public static class EnemyConstants{
         public static final int FIRE_DEMON = 29;
         public static final int IDLE = 0;
-        public static final int WALK = 1;
+        public static final int WALK = 3;
         public static final int CLEAVE = 4;
         public static final int TAKE_HIT = 5;
         public static final int DEAD = 6;
