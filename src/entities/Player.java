@@ -6,12 +6,16 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.sql.Array;
+import java.util.ArrayList;
+
 import static utilz.HelpMethods.CanMoveHere;
 import static utilz.Constants.PlayerConstants.*;
 import static utilz.HelpMethods.*;
-
+import utilz.LoadSave;
 public class Player extends Entity{
     private BufferedImage[][] animations;
+    private ArrayList<BufferedImage> hearts;
     private int aniTick ,aniIndex , aniSpeed = 20;
     private int playerAction = IDLE;
     private boolean moving = false, attacking = false;
@@ -31,18 +35,30 @@ public class Player extends Entity{
         super(x,y,widght,height);
         loadAnimation();
         initHitbox(x,y+10,(int) (18*Game.SCALE),(int) (32*Game.SCALE));
+        initHeart();
+    }
+    private void initHeart(){
+        hearts= new ArrayList<>();
+        BufferedImage heart = LoadSave.GetSpriteAtlas(LoadSave.HEART);
+        for(int i=1;i<=3;i++)   hearts.add(heart);
     }
     public void update(){
         updatePos();
         updateAnimationTick();
         setAnimation();
     }
-
+    // In UI ra screen
     public void render(Graphics g,int lvlOffset){
         g.drawImage(animations[playerAction][aniIndex], (int) (hitBox.x - xDrawOffSet) - lvlOffset,(int) (hitBox.y -yDrawOffSet),null);
         drawHitbox(g,lvlOffset);
+        drawHeart(g);
     }
-
+    // draw heart
+    private void drawHeart(Graphics g){
+        for(int i=0;i<hearts.size();i++){
+            g.drawImage(hearts.get(i),  50*(i+1), 30, 45, 45, null);
+        }
+    }
     private void loadAnimation(){
         //BufferedImage img = LoadSave.GetSpriteAtlas(LoadSave.PLAYER_ATLAS);
         animations = new BufferedImage[7][8];
