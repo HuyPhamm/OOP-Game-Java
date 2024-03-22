@@ -6,6 +6,7 @@ import entities.Player;
 import levels.LevelManager;
 import main.Game;
 import utilz.LoadSave;
+import object.ObjectManager;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -17,6 +18,7 @@ public class Playing extends State implements Statemethods{
     private LevelManager levelManager;
     private EnemyManager enemyManager;
     private PauseOverlay pauseOverlay;
+    private ObjectManager objectManager;
     private boolean paused = false;
     private int xLvlOffset;
     private int leftBorder = (int) (0.4 * Game.GAME_WIDTH);
@@ -37,7 +39,8 @@ public class Playing extends State implements Statemethods{
         loadBackground();
         levelManager = new LevelManager(game);
         enemyManager = new EnemyManager(this);
-        player = new Player(100,200,(int) (20 * Game.SCALE), (int) (24 * Game.SCALE));
+        player = new Player(100,100,(int) (20 * Game.SCALE), (int) (24 * Game.SCALE));
+        objectManager = new ObjectManager(this);
         player.loadLvlData(levelManager.getCurrentLevel().getLevelData());
         pauseOverlay = new PauseOverlay(this);
     }
@@ -106,6 +109,7 @@ public class Playing extends State implements Statemethods{
             levelManager.update();
             player.update();
             enemyManager.update(levelManager.getCurrentLevel().getLevelData(),player);
+            objectManager.update(levelManager.getCurrentLevel().getLevelData(), player);
             checkCloseToBorder();
         }
         else{
@@ -135,12 +139,14 @@ public class Playing extends State implements Statemethods{
         levelManager.draw(g,xLvlOffset);
         player.render(g,xLvlOffset);
         enemyManager.draw(g, xLvlOffset);
-
+        //objectManager.draw(g, xLvlOffset);
         if(paused){
             g.setColor(new Color(0,0,0,100));
             g.fillRect(0,0,Game.GAME_WIDTH,Game.GAME_HIGHT);
             pauseOverlay.draw(g);
         }
+        if (objectManager != null) objectManager.draw(g, xLvlOffset);
+
     }
     public void mouseDragged(MouseEvent e){
         if(paused)

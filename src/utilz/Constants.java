@@ -3,7 +3,8 @@ package utilz;
 import main.Game;
 
 public class Constants {
-
+    public static final int ANI_SPEED = 25;
+    public static final float GRAVITY = 0.04f * Game.SCALE;
     public static class EnemyConstants{
         public static final int FIRE_DEMON = 29;
         public static final int IDLE = 0;
@@ -38,6 +39,27 @@ public class Constants {
             return 0;
         }
 
+    }
+    //Bullet
+    public static class Bullet {
+        public static final int BULLET_DEFAULT_WIDTH = 16;
+        public static final int BULLET_DEFAULT_HEIGHT = 13;
+
+        public static final int BULLET_WIDTH = (int) (Game.SCALE * BULLET_DEFAULT_WIDTH);
+        public static final int BULLET_HEIGHT = (int) (Game.SCALE * BULLET_DEFAULT_HEIGHT);
+        public static final float SPEED = 1.2f * Game.SCALE;
+    }
+
+    public static class ObjectConstants {
+        public static final int BULLET = 0;
+
+        public static int GetSpriteAmount(int object_type) {
+            switch (object_type) {
+                case BULLET:
+                    return 3;
+            }
+            return 1;
+        }
     }
     public static class UI{
         public static class Buttons{

@@ -3,7 +3,7 @@ package utilz;
 import main.Game;
 
 import java.awt.geom.Rectangle2D;
-
+import object.Bullet;
 public class HelpMethods {
     public static boolean CanMoveHere(float x, float y, float width, float height, int[][] lvlData){
         if(!IsSolid(x,y,lvlData))
@@ -28,7 +28,7 @@ public class HelpMethods {
 
     public static boolean IsTileSolid(int xTile, int yTile, int[][] lvlData){
         int value = lvlData[(int) yTile][(int) xTile];
-        if(value >= 45 ||value == 0 || value == 5 || value == 6 || value == 7 || value == 8 || value == 35){
+        if(value > 45 ||value == 0 || value == 5 || value == 6 || value == 7 || value == 8 || value == 35){
             return  false;
         }
         return true;
@@ -46,7 +46,7 @@ public class HelpMethods {
         }
     }
     public static float GetEntityYPosUnderRoofOrAboveFloor(Rectangle2D.Float hitBox, float airSpeed){
-        int currentTile = (int)(hitBox.y / (Game.TILES_SIZE -1)) ;
+        int currentTile = (int)(hitBox.y / (Game.TILES_SIZE -2)) ;
         if(airSpeed > 0){
             //Falling : Rơi chạm đất
             int tileYPos = currentTile * (Game.TILES_SIZE) ;
@@ -89,5 +89,11 @@ public class HelpMethods {
            return IsAllTileWalkable(secondXTile,firstXTile,yTile,lvlData);
         else
             return IsAllTileWalkable(firstXTile,secondXTile,yTile,lvlData);
+    }
+
+    // Check xem đạn có va chạm với tiles hay không
+    public static boolean IsBulletsHittingLevel(Bullet b, int[][] lvlData) {
+        return IsSolid(b.getHitbox().x + b.getHitbox().width / 2, b.getHitbox().y + b.getHitbox().height / 2, lvlData);
+
     }
 }
