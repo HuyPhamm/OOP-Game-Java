@@ -35,7 +35,9 @@ public class EnemyManager {
 
     private void drawDemons(Graphics g, int xLvlOffset) {
         for(FireDemon d : fireDemons){
-            g.drawImage(fireAnimations[d.getEnemyState()][d.getAniIndex()],(int) d.getHitBox().x- xLvlOffset - FIRE_DEMON_DRAWOFFSET_X, (int) d.getHitBox().y - FIRE_DEMON_DRAWOFFSET_Y, DEMON_WIDTH,DEMON_HEIGHT,null);
+            g.drawImage(fireAnimations[d.getEnemyState()][d.getAniIndex()], (int) d.getHitBox().x - xLvlOffset - FIRE_DEMON_DRAWOFFSET_X + d.flipX(), (int) d.getHitBox().y - FIRE_DEMON_DRAWOFFSET_Y, DEMON_WIDTH * d.flipW(), DEMON_HEIGHT, null);
+            d.drawHitbox(g, xLvlOffset);
+            d.drawAttackHitBox(g, xLvlOffset);
         }
     }
 
