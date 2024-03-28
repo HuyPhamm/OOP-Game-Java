@@ -97,6 +97,17 @@ public class Player extends Entity{
             g.drawImage(hearts.get(i),  50*(i+1), 30, 45, 45, null);
         }
     }
+    // trừ máu.
+    public void minusHeart(int value) {
+        for (int i = 0; i < value; i++) {
+//        	System.out.println(hearts.size());
+            if (hearts.size() > 0) {
+            //    playing.getGame().getAudioPlayer().playEffect(AudioPlayer.HURT);
+                hearts.remove(hearts.size() - 1);
+
+            }
+        }
+    }
     private void drawBullet(Graphics g, int xLvlOffset) {
         for (Bullet b : bullets) {
             b.draw(g, xLvlOffset);

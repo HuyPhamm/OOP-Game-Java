@@ -2,23 +2,29 @@ package entities;
 
 import main.Game;
 
+import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
 import static utilz.Constants.EnemyConstants.*;
 import static utilz.HelpMethods.*;
 import static utilz.Constants.Direction.*;
 
+
 public class Enemy extends Entity{
     protected int aniIndex, enemyState, enemyType;
     protected int aniTick, aniSpeed = 12;
     protected boolean firstUpdate = true;
+   // protected Rectangle2D.Float hitbox;
     protected boolean inAir;
     protected float fallSpeed;
+    protected boolean attackChecked;
     protected float gravity = 0.04f * Game.SCALE;
     protected float walkSpeed = 0.35f * Game.SCALE;
     protected int walkDir = LEFT;
     protected int tileY;
     protected float attackDistance = Game.TILES_SIZE;
+    protected int attackBoxOffsetX;
+    protected Rectangle2D.Float attackBox;
     public Enemy(float x,float y,int width, int height,int enemyType){
         super(x,y,width,height);
         this.enemyType = enemyType;
@@ -101,6 +107,18 @@ public class Enemy extends Entity{
                     enemyState = IDLE;
             }
         }
+    }
+    // player bị quái ấn công
+    protected void checkPlayerHit(Rectangle2D.Float attackBox, Player player){
+        if(attackBox.intersects(player.getHitBox())){
+            player.minusHeart(1);
+            attackChecked=true;
+        }
+    }
+    protected void drawAttackHitBox(Graphics g, int xLvlOffset)
+    {
+        g.setColor(Color.PINK);
+        g.drawRect((int) attackBox.x - xLvlOffset, (int) attackBox.y, (int) attackBox.width, (int) attackBox.height);
     }
     protected void changeWalkDir() {
         if(walkDir == LEFT)
