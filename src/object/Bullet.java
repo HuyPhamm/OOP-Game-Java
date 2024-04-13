@@ -33,7 +33,7 @@ public class Bullet extends GameObject {
 
         for (int i = 0; i < animation.length; i++)
             animation[i] = LoadSave.GetSpriteAtlas(LoadSave.BULLET[i]);
-        
+
     }
 
     public void update() {

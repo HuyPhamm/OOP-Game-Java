@@ -5,6 +5,7 @@ import entities.EnemyManager;
 import entities.Player;
 import levels.LevelManager;
 import main.Game;
+import object.Bullet;
 import utilz.LoadSave;
 import object.ObjectManager;
 
@@ -39,7 +40,7 @@ public class Playing extends State implements Statemethods{
         loadBackground();
         levelManager = new LevelManager(game);
         enemyManager = new EnemyManager(this);
-        player = new Player(100,100,(int) (20 * Game.SCALE), (int) (24 * Game.SCALE));
+        player = new Player(100,100,(int) (20 * Game.SCALE), (int) (24 * Game.SCALE),this);
         objectManager = new ObjectManager(this);
         player.loadLvlData(levelManager.getCurrentLevel().getLevelData());
         pauseOverlay = new PauseOverlay(this);
@@ -101,6 +102,10 @@ public class Playing extends State implements Statemethods{
     }
     public void unpauseGame(){
         paused = false;
+    }
+
+    public void checkEnemyHit(Bullet b) {
+        enemyManager.checkEnemyHit(b);
     }
 
     @Override

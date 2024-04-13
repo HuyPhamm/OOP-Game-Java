@@ -1,6 +1,8 @@
 package entities;
 
 import gamestates.Playing;
+import object.Bullet;
+import utilz.Constants;
 import utilz.LoadSave;
 import static utilz.Constants.EnemyConstants.*;
 
@@ -8,6 +10,8 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+
+import static utilz.Constants.*;
 
 public class EnemyManager {
     private Playing playing;
@@ -25,7 +29,8 @@ public class EnemyManager {
 
     public void update(int[][] lvlData, Player player){
         for(FireDemon d : fireDemons){
-            d.update(lvlData,player);
+            if(d.isActive())
+                d.update(lvlData,player);
         }
     }
 
@@ -35,9 +40,11 @@ public class EnemyManager {
 
     private void drawDemons(Graphics g, int xLvlOffset) {
         for(FireDemon d : fireDemons){
-            g.drawImage(fireAnimations[d.getEnemyState()][d.getAniIndex()], (int) d.getHitBox().x - xLvlOffset - FIRE_DEMON_DRAWOFFSET_X + d.flipX(), (int) d.getHitBox().y - FIRE_DEMON_DRAWOFFSET_Y, DEMON_WIDTH * d.flipW(), DEMON_HEIGHT, null);
-            d.drawHitbox(g, xLvlOffset);
-            d.drawAttackHitBox(g, xLvlOffset);
+            if(d.isActive()) {
+                g.drawImage(fireAnimations[d.getEnemyState()][d.getAniIndex()], (int) d.getHitBox().x - xLvlOffset - FIRE_DEMON_DRAWOFFSET_X + d.flipX(), (int) d.getHitBox().y - FIRE_DEMON_DRAWOFFSET_Y, DEMON_WIDTH * d.flipW(), DEMON_HEIGHT, null);
+                d.drawHitbox(g, xLvlOffset);
+                d.drawAttackHitBox(g, xLvlOffset);
+            }
         }
     }
 
@@ -84,4 +91,23 @@ public class EnemyManager {
 
     }
 
+    // Check xem bị bắn hay không
+    public void checkEnemyHit(Bullet b) {
+        Rectangle attackBox = b.getHitbox().getBounds();
+        for (int i = 0; i < fireDemons.size(); i++) {
+            if (!fireDemons.get(i).isDead() && fireDemons.get(i).getEnemyState() != DEAD) {
+                if (fireDemons.get(i).getHitBox().intersects(attackBox)) {
+                    fireDemons.get(i).hurt(playing.getPlayer().getDamage());
+                    b.setActive(false);
+                    return;
+                }
+
+            }
+        }
+    }
+    public void resetEnemies() {
+        for (FireDemon d : fireDemons) {
+            d.resetEnemy();
+        }
+    }
 }

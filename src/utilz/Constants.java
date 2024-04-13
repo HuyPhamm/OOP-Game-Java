@@ -20,7 +20,7 @@ public class Constants {
         public static final int FIRE_DEMON_DRAWOFFSET_X = (int) (50 * Game.SCALE);
         public static final int FIRE_DEMON_DRAWOFFSET_Y = (int) (48 * Game.SCALE);
 
-        public static int GetSpirteAmount(int enemy_type, int enemy_state){
+        public static int GetSpirteAmount(int enemy_type, int enemy_state) {
             switch (enemy_type) {
                 case FIRE_DEMON:
                     switch (enemy_state) {
@@ -38,7 +38,13 @@ public class Constants {
             }
             return 0;
         }
-
+        public static int GetMaxHeath(int enemy_type){
+            switch (enemy_type) {
+                case FIRE_DEMON:
+                    return 100;
+            }
+            return 0;
+        }
     }
     //Bullet
     public static class Bullet {
