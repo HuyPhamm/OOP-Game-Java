@@ -1,5 +1,6 @@
 package entities;
 
+import gamestates.Playing;
 import main.Game;
 import utilz.Constants;
 import utilz.LoadSave;
@@ -38,13 +39,16 @@ public class Player extends Entity{
     private float playerSpeed = 1.5f * Game.SCALE;
     private float xDrawOffSet = 15 * Game.SCALE;
     private float yDrawOffSet = 12 * Game.SCALE;
+    private int damage = 150;
 
     //Flip animation
     private int flipX = 0;
     private int flipW = 1;
     private int[][] lvlData;
-    public Player(float x, float y, int widght, int height){
+    private Playing playing;
+    public Player(float x, float y, int widght, int height, Playing playing){
         super(x,y,widght,height);
+        this.playing = playing;
         loadAnimation();
         initHitbox(x,y+10, (int)(15*Game.SCALE), (int) (28*Game.SCALE));
         initHeart();
@@ -79,6 +83,7 @@ public class Player extends Entity{
             b.update();
             if (b.isActive()) {
                 b.update();
+                playing.checkEnemyHit(b);
                 if (IsBulletsHittingLevel(b, lvlData))
                     b.setActive(false);
             }
@@ -102,7 +107,7 @@ public class Player extends Entity{
         for (int i = 0; i < value; i++) {
 //        	System.out.println(hearts.size());
             if (hearts.size() > 0) {
-            //    playing.getGame().getAudioPlayer().playEffect(AudioPlayer.HURT);
+                //    playing.getGame().getAudioPlayer().playEffect(AudioPlayer.HURT);
                 hearts.remove(hearts.size() - 1);
 
             }
@@ -337,5 +342,8 @@ public class Player extends Entity{
     }
     public void setJump(boolean jump){
         this.jump = jump;
+    }
+    public int getDamage() {
+        return this.damage;
     }
 }

@@ -86,7 +86,7 @@ public class HelpMethods {
         int secondXTile = (int) (secondHitbox.x / Game.TILES_SIZE);
 
         if(firstXTile > secondXTile)
-           return IsAllTileWalkable(secondXTile,firstXTile,yTile,lvlData);
+            return IsAllTileWalkable(secondXTile,firstXTile,yTile,lvlData);
         else
             return IsAllTileWalkable(firstXTile,secondXTile,yTile,lvlData);
     }

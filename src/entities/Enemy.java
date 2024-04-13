@@ -6,6 +6,7 @@ import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
 import static utilz.Constants.EnemyConstants.*;
+import static utilz.Constants.EnemyConstants.GetMaxHeath;
 import static utilz.HelpMethods.*;
 import static utilz.Constants.Direction.*;
 
@@ -14,8 +15,12 @@ public class Enemy extends Entity{
     protected int aniIndex, enemyState, enemyType;
     protected int aniTick, aniSpeed = 12;
     protected boolean firstUpdate = true;
-   // protected Rectangle2D.Float hitbox;
+    // protected Rectangle2D.Float hitbox;
     protected boolean inAir;
+    protected boolean active = true;
+    protected int currentHealth;
+    protected int maxHeath;
+    protected boolean isDead = false;
     protected float fallSpeed;
     protected boolean attackChecked;
     protected float gravity = 0.04f * Game.SCALE;
@@ -28,6 +33,9 @@ public class Enemy extends Entity{
     public Enemy(float x,float y,int width, int height,int enemyType){
         super(x,y,width,height);
         this.enemyType = enemyType;
+        this.enemyState = IDLE;
+        maxHeath = GetMaxHeath(enemyType);
+        currentHealth = maxHeath;
         initHitbox(x,y,width,height);
     }
 
@@ -103,8 +111,14 @@ public class Enemy extends Entity{
             aniIndex++;
             if (aniIndex >= GetSpirteAmount(enemyType, enemyState)) {
                 aniIndex = 0;
-                if(enemyState == CLEAVE)
-                    enemyState = IDLE;
+                switch (enemyState) {
+
+                    case CLEAVE, TAKE_HIT -> {	// change enemy state after attack or take hit
+                        enemyState = IDLE;
+                    }
+
+                    case DEAD -> active = false;    // enemy is no longer active -> skip all updates
+                }
             }
         }
     }
@@ -114,6 +128,16 @@ public class Enemy extends Entity{
             player.minusHeart(1);
             attackChecked=true;
         }
+    }
+    //Enemy bị tấn công
+    public void hurt(int amount) {
+        currentHealth -= amount;
+        if (currentHealth <= 0){
+            newState(DEAD);
+            isDead = true;
+        }
+        else
+            newState(TAKE_HIT);
     }
     protected void drawAttackHitBox(Graphics g, int xLvlOffset)
     {
@@ -126,11 +150,25 @@ public class Enemy extends Entity{
         else
             walkDir = LEFT;
     }
-
+    public void resetEnemy() {
+        hitBox.x = x;
+        hitBox.y = y;
+        firstUpdate = true;
+        currentHealth = maxHeath;
+        newState(IDLE);
+        active = true;
+        isDead = false;
+    }
     public int getAniIndex(){
         return aniIndex;
     }
     public int getEnemyState(){
         return enemyState;
+    }
+    public boolean isActive() {
+        return active;
+    }
+    public boolean isDead(){
+        return isDead;
     }
 }
