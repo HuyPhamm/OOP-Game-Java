@@ -10,10 +10,10 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static utilz.HelpMethods.CanMoveHere;
 import static utilz.Constants.PlayerConstants.*;
-import static utilz.HelpMethods.*;
 import static utilz.Constants.ObjectConstants.BULLET;
+import static utilz.HelpMethods.*;
+
 import java.util.ConcurrentModificationException;
 
 import object.Bullet;
@@ -107,6 +107,29 @@ public class Player extends Entity{
 
             }
         }
+    }
+    // reset tất cả thông số player
+    public void resetAll(){
+        resetDirBoolens();
+        inAir = false;
+        attacking = false;
+        moving = false;
+        jump = false;
+        airSpeed = 0f;
+        hitBox.x = x;
+        hitBox.y = y;
+        if (!IsEntityOnFloor(hitBox,lvlData))
+            inAir = true;
+        initHeart();
+        bullets.clear();
+    }
+
+    public boolean IsDeath() {
+        if (hitBox.y + hitBox.height + 1 > Game.GAME_HIGHT)
+        {
+            hearts.clear();
+        }
+        return hearts.isEmpty();
     }
     private void drawBullet(Graphics g, int xLvlOffset) {
         for (Bullet b : bullets) {

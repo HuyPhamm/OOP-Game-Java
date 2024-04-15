@@ -148,6 +148,19 @@ public class Playing extends State implements Statemethods{
         if (objectManager != null) objectManager.draw(g, xLvlOffset);
 
     }
+
+    // reset tất cả để replay.
+    public void resetAll(){
+        paused = false;
+//        gameover = false;
+//        lvlcompleted=false;
+//        checkBorder = true;
+//        existBoss = false;
+//        levelCompletedOverlay.setAniIndex(0);
+        player.resetAll();
+//        enemyManager;
+        objectManager.resetAllObjects();
+    }
     public void mouseDragged(MouseEvent e){
         if(paused)
             pauseOverlay.mouseDragged(e);
