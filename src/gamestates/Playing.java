@@ -94,6 +94,18 @@ public class Playing extends State implements Statemethods{
         }
 
     }
+    // reset tất cả để replay.
+    public void resetAll(){
+        paused = false;
+//        gameover = false;
+//        lvlcompleted=false;
+//        checkBorder = true;
+//        existBoss = false;
+//        levelCompletedOverlay.setAniIndex(0);
+        player.resetAll();
+        enemyManager.resetEnemies();
+        objectManager.resetAllObjects();
+    }
     public void windowFocusLost(){
         player.resetDirBoolens();
     }

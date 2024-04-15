@@ -113,6 +113,20 @@ public class Player extends Entity{
             }
         }
     }
+    public void resetAll(){
+        resetDirBoolens();
+        inAir = false;
+        attacking = false;
+        moving = false;
+        jump = false;
+        airSpeed = 0f;
+        hitBox.x = x;
+        hitBox.y = y;
+        if (!IsEntityOnFloor(hitBox,lvlData))
+            inAir = true;
+        initHeart();
+        bullets.clear();
+    }
     private void drawBullet(Graphics g, int xLvlOffset) {
         for (Bullet b : bullets) {
             b.draw(g, xLvlOffset);
