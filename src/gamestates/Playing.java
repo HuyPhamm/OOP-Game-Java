@@ -1,5 +1,6 @@
 package gamestates;
 
+import UI.GameOverOverlay;
 import UI.PauseOverlay;
 import entities.EnemyManager;
 import entities.Player;
@@ -13,6 +14,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 public class Playing extends State implements Statemethods{
     private Player player;
@@ -31,12 +33,14 @@ public class Playing extends State implements Statemethods{
     // Background
     private BufferedImage[] backgroundImage;
     private BufferedImage cloud;
+    private GameOverOverlay gameOverOverlay;
+    boolean gameover;
 
-    public Playing(Game game){
+    public Playing(Game game) throws IOException{
         super(game);
         initClasses();
     }
-    private void initClasses(){
+    private void initClasses() throws IOException {
         loadBackground();
         levelManager = new LevelManager(game);
         enemyManager = new EnemyManager(this);
@@ -44,6 +48,7 @@ public class Playing extends State implements Statemethods{
         objectManager = new ObjectManager(this);
         player.loadLvlData(levelManager.getCurrentLevel().getLevelData());
         pauseOverlay = new PauseOverlay(this);
+        gameOverOverlay = new GameOverOverlay(this);
     }
     private void loadBackground() {//load background
         backgroundImage = new BufferedImage[5];
@@ -122,12 +127,16 @@ public class Playing extends State implements Statemethods{
 
     @Override
     public void update() {
-        if(!paused){
+        gameover= player.IsDeath();
+        if(!paused&&!gameover){
             levelManager.update();
             player.update();
             enemyManager.update(levelManager.getCurrentLevel().getLevelData(),player);
             objectManager.update(levelManager.getCurrentLevel().getLevelData(), player);
             checkCloseToBorder();
+        }
+        if (gameover){
+            gameOverOverlay.update();
         }
         else{
             pauseOverlay.update();
@@ -161,6 +170,8 @@ public class Playing extends State implements Statemethods{
             g.setColor(new Color(0,0,0,100));
             g.fillRect(0,0,Game.GAME_WIDTH,Game.GAME_HIGHT);
             pauseOverlay.draw(g);
+        } else if (gameover) {
+            gameOverOverlay.draw(g);
         }
         if (objectManager != null) objectManager.draw(g, xLvlOffset);
 
@@ -176,20 +187,31 @@ public class Playing extends State implements Statemethods{
 
     @Override
     public void mousePressed(MouseEvent e) {
-        if(paused)
+        if(paused) {
             pauseOverlay.mousePressed(e);
+        }
+        else if (gameover) {
+            gameOverOverlay.mousePressed(e);
+        }
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        if(paused)
+        if(paused) {
             pauseOverlay.mouseReleased(e);
+        } else if (gameover) {
+            gameOverOverlay.mouseReleased(e);
+        }
     }
 
     @Override
     public void mouseMoved(MouseEvent e){
-        if(paused)
+        if(paused) {
             pauseOverlay.mouseMoved(e);
+        } else if (gameover) {
+            gameOverOverlay.mouseMoved(e);
+        }
+
     }
 
     @Override

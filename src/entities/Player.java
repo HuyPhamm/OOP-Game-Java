@@ -113,6 +113,13 @@ public class Player extends Entity{
             }
         }
     }
+    public boolean IsDeath() {
+        if (hitBox.y + hitBox.height + 1 > Game.GAME_HIGHT)
+        {
+            hearts.clear();
+        }
+        return hearts.isEmpty();
+    }
     public void resetAll(){
         resetDirBoolens();
         inAir = false;
