@@ -5,6 +5,7 @@ import gamestates.Menu;
 import gamestates.Playing;
 
 import java.awt.*;
+import java.io.IOException;
 
 public class Game implements Runnable{
     private GameWindow gameWindow;
@@ -24,14 +25,14 @@ public class Game implements Runnable{
     public final static int GAME_WIDTH = TILES_SIZE * TILES_IN_WIDGHT;
     public final static int GAME_HIGHT = TILES_SIZE * TILES_IN_HIGHT;
 
-    public Game(){
+    public Game() throws IOException{
         initClasses();
         gamePanel = new GamePanel(this);
         gameWindow = new GameWindow(gamePanel);
         gamePanel.requestFocus();
         startGameLoop();
     }
-    private void initClasses(){
+    private void initClasses() throws IOException {
         menu = new Menu(this);
         playing = new Playing(this);
     }
