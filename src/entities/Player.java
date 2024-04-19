@@ -120,6 +120,13 @@ public class Player extends Entity{
         }
         return hearts.isEmpty();
     }
+    public boolean IsCompleted(){
+        // 7900 la khoang cach de toi diem chien thang
+        if (hitBox.x + hitBox.width  > 7900) {
+            return true;
+        }
+        return false;
+    }
     public void resetAll(){
         resetDirBoolens();
         inAir = false;
