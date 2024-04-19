@@ -1,6 +1,7 @@
 package gamestates;
 
 import UI.GameOverOverlay;
+import UI.LevelCompletedOverlay;
 import UI.PauseOverlay;
 import entities.EnemyManager;
 import entities.Player;
@@ -22,6 +23,7 @@ public class Playing extends State implements Statemethods{
     private EnemyManager enemyManager;
     private PauseOverlay pauseOverlay;
     private ObjectManager objectManager;
+    private LevelCompletedOverlay levelCompletedOverlay;
     private boolean paused = false;
     private int xLvlOffset;
     private int leftBorder = (int) (0.4 * Game.GAME_WIDTH);
@@ -34,7 +36,8 @@ public class Playing extends State implements Statemethods{
     private BufferedImage[] backgroundImage;
     private BufferedImage cloud;
     private GameOverOverlay gameOverOverlay;
-    boolean gameover;
+    private boolean gameover;
+    private boolean lvlCompleted = false;
 
     public Playing(Game game) throws IOException{
         super(game);
@@ -49,6 +52,7 @@ public class Playing extends State implements Statemethods{
         player.loadLvlData(levelManager.getCurrentLevel().getLevelData());
         pauseOverlay = new PauseOverlay(this);
         gameOverOverlay = new GameOverOverlay(this);
+        levelCompletedOverlay = new LevelCompletedOverlay(this);
     }
     private void loadBackground() {//load background
         backgroundImage = new BufferedImage[5];
@@ -128,7 +132,8 @@ public class Playing extends State implements Statemethods{
     @Override
     public void update() {
         gameover= player.IsDeath();
-        if(!paused&&!gameover){
+        lvlCompleted = player.IsCompleted();
+        if(!paused&&!gameover&&!lvlCompleted){
             levelManager.update();
             player.update();
             enemyManager.update(levelManager.getCurrentLevel().getLevelData(),player);
@@ -138,9 +143,10 @@ public class Playing extends State implements Statemethods{
         if (gameover){
             gameOverOverlay.update();
         }
-        else{
+        else if(paused)
             pauseOverlay.update();
-        }
+        else if (lvlCompleted)
+            levelCompletedOverlay.update();
     }
 
     private void checkCloseToBorder() {
@@ -173,6 +179,11 @@ public class Playing extends State implements Statemethods{
         } else if (gameover) {
             gameOverOverlay.draw(g);
         }
+        else if(lvlCompleted){
+            g.setColor(new Color(0, 0, 0, 150));
+            g.fillRect(0, 0, Game.GAME_WIDTH, Game.GAME_HIGHT);
+            levelCompletedOverlay.draw(g);
+        }
         if (objectManager != null) objectManager.draw(g, xLvlOffset);
 
     }
@@ -193,6 +204,8 @@ public class Playing extends State implements Statemethods{
         else if (gameover) {
             gameOverOverlay.mousePressed(e);
         }
+        else if(lvlCompleted)
+            levelCompletedOverlay.mousePressed(e);
     }
 
     @Override
@@ -202,6 +215,8 @@ public class Playing extends State implements Statemethods{
         } else if (gameover) {
             gameOverOverlay.mouseReleased(e);
         }
+        else if(lvlCompleted)
+            levelCompletedOverlay.mouseReleased(e);
     }
 
     @Override
@@ -211,6 +226,8 @@ public class Playing extends State implements Statemethods{
         } else if (gameover) {
             gameOverOverlay.mouseMoved(e);
         }
+        else if(lvlCompleted)
+            levelCompletedOverlay.mouseMoved(e);
 
     }
 
