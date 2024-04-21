@@ -5,11 +5,10 @@ import java.awt.geom.Rectangle2D;
 import static utilz.Constants.Direction.LEFT;
 import static utilz.Constants.Direction.RIGHT;
 import static utilz.Constants.EnemyConstants.*;
-import entities.Enemy;
-public class FireDemon extends Enemy{
+public class ShadowDemon extends Enemy{
 
-    public FireDemon(float x, float y) {
-        super(x, y, DEMON_WIDTH, DEMON_HEIGHT, FIRE_DEMON);
+    public ShadowDemon(float x, float y) {
+        super(x, y, DEMON_WIDTH, DEMON_HEIGHT, SHADOW_DEMON);
         initHitbox(x,y, 30* Game.SCALE,  30 * Game.SCALE);
         initAttackBox();
     }
@@ -25,9 +24,9 @@ public class FireDemon extends Enemy{
     private void updateAttackBox() {
         // Update attack hitbox theo huong di cua quai
         if (walkDir == LEFT) {
-           attackBox.x = hitBox.x - attackBoxOffsetX;
+            attackBox.x = hitBox.x - attackBoxOffsetX;
         } else if (walkDir == RIGHT) {
-            attackBox.x = hitBox.x + attackBoxOffsetX - 20;
+            attackBox.x = hitBox.x + attackBoxOffsetX - 10;
         }
         attackBox.y = hitBox.y;
     }
@@ -52,7 +51,7 @@ public class FireDemon extends Enemy{
                 case CLEAVE:
                     if(aniIndex == 0)
                         attackChecked = false;
-                    if(aniIndex == 10 && !attackChecked)
+                    if(aniIndex == 5 && !attackChecked)
                     {
                         checkPlayerHit(attackBox, player);
                     }
@@ -64,7 +63,7 @@ public class FireDemon extends Enemy{
     }
     public int flipX() {
         if (walkDir == RIGHT)
-            return width;
+            return (int)(width*1.55);
         else
             return 0;
     }
