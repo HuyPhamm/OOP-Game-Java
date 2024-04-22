@@ -1,6 +1,8 @@
 package utilz;
 
 import entities.FireDemon;
+import entities.FrostDemon;
+import entities.ShadowDemon;
 import main.Game;
 
 import javax.imageio.ImageIO;
@@ -54,6 +56,32 @@ public class LoadSave {
                 int value = color.getGreen();
                 if (value == FIRE_DEMON)
                     list.add(new FireDemon(j * Game.TILES_SIZE, i * Game.TILES_SIZE));
+            }
+        }
+        return list;
+    }
+    public static ArrayList<FrostDemon> GetFrostDemon(){
+        BufferedImage img = GetSpriteAtlas(LEVEL_ONE_DATA);
+        ArrayList<FrostDemon> list = new ArrayList<>();
+        for (int i = 0; i < img.getHeight(); i++) {
+            for (int j = 0; j < img.getWidth(); j++) {
+                Color color = new Color(img.getRGB(j, i));
+                int value = color.getGreen();
+                if (value == FROST_DEMON)
+                    list.add(new FrostDemon(j * Game.TILES_SIZE, i * Game.TILES_SIZE));
+            }
+        }
+        return list;
+    }
+    public static ArrayList<ShadowDemon> GetShadowDemon(){
+        BufferedImage img = GetSpriteAtlas(LEVEL_ONE_DATA);
+        ArrayList<ShadowDemon> list = new ArrayList<>();
+        for (int i = 0; i < img.getHeight(); i++) {
+            for (int j = 0; j < img.getWidth(); j++) {
+                Color color = new Color(img.getRGB(j, i));
+                int value = color.getGreen();
+                if (value == SHADOW_DEMON)
+                    list.add(new ShadowDemon(j * Game.TILES_SIZE, i * Game.TILES_SIZE));
             }
         }
         return list;
