@@ -6,7 +6,6 @@ hoàn thành, người chơi chiến thắng. Game over khi số mạng bằng 0
 - B1: Sử dụng IDE thông dụng để code Java như Intellij, Eclipse, Netbeans.
 - B2: Clone repo về máy
 - B3: Chạy hàm MainClass trong thư mục main
-Video demo: [Click here](https://drive.google.com/file/d/1iPGuFh6iuwg758oxtbgsWxMJpptaRPRv/view?usp=sharing)
 ## Cách chơi Game:
 Người chơi điều khiển nhân vật bằng các phím như sau:
 - A: Di chuyển trái.
@@ -14,3 +13,4 @@ Người chơi điều khiển nhân vật bằng các phím như sau:
 - W, SPACE: Nhảy lên.
 - J: Bắn súng.
 - ESC: Pause game.
+## Video demo: [Click here](https://drive.google.com/file/d/1iPGuFh6iuwg758oxtbgsWxMJpptaRPRv/view?usp=sharing)
